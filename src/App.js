@@ -1,40 +1,56 @@
 import React, { Component } from 'react';
 import './App.css';
+import UserCardList from './components/UserCardList';
+import UserCard from './components/UserCard';
 
 class App extends Component {
 
   state = {
-    input: ""
+    usernameInput: "",
+    userInfo: []
+
   };
 
   handleChange = event => {
     this.setState({
-      input: event.target.value
+      usernameInput: event.target.value
     });
   }
 
-  handleSubmit () {
-      alert("Form submitted!");
+  handleSubmit = event => {
+      event.preventDefault();
+      const username = this.state.usernameInput;
+      fetch(`https://api.github.com/users/${username}`)
+        .then(response => response.json())
+        .then((result) => {
+          this.setState({
+            usernameInput: "",
+            userInfo: [this.state.userInfo, result]
+        });
+      });
   };
 
   render() {
+    const { userInfo } = this.state
     return (
       <div className="App">
         <form onSubmit={this.handleSubmit}>
           <label>
             <input 
             type="text"
-            value={this.state.input}
+            value={this.state.usernameInput}
             placeholder="Type in a username here"
             onChange={this.handleChange}
             />
           </label>
           <button type="submit">Submit</button>
         </form>
-        <p>Hello World</p>
+        <UserCardList
+        userInfo={userInfo}
+        />
       </div>
-  );
-}
+    );
+  };
 }
 
 export default App;
