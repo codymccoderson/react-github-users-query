@@ -25,7 +25,7 @@ class App extends Component {
         .then((result) => {
           this.setState({
             usernameInput: "",
-            userInfo: [this.state.userInfo, result]
+            userInfo: [...this.state.userInfo, result]
         });
       });
   };
@@ -35,18 +35,15 @@ class App extends Component {
     return (
       <div className="App">
         <form onSubmit={this.handleSubmit}>
-          <label>
             <input 
             type="text"
-            value={this.state.usernameInput}
             placeholder="Type in a username here"
             onChange={this.handleChange}
             />
-          </label>
           <button type="submit">Submit</button>
         </form>
         <UserCardList
-        userInfo={userInfo}
+        listOfAllUsers={userInfo}
         />
       </div>
     );

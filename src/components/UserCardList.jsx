@@ -2,20 +2,18 @@ import React from 'react';
 import UserCard from './UserCard';
 
 const UserCardList = props => {
+
+    const { listOfAllUsers } = props;
+
+    return(
+        <div>
+           { listOfAllUsers.map(eachUser => (
+               <UserCard user={eachUser}
+               />
+           ))}    
+        </div>
+    )
     
-    const { userInfo } = props;
-
-    const userInfoMap = userInfo.map(userInfo => {
-        return(
-            <div className="userPic" key={userInfo.login}>
-                <UserCard
-                    userInfo={userInfo}
-                />
-            </div>
-        )}
-               
-    )};
-
-
+}
 
 export default UserCardList;
